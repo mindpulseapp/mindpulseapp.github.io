@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كم عمرك العقلي فعلاً؟ | اختبار سريع</title>
+<meta name="description" content="اختبار تفاعلي مكوّن من 8 أسئلة يكشف عمرك العقلي الحقيقي بعيداً عن شهادة ميلادك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #241534;
+    --bg2: #34204a;
+    --panel: #3d2452;
+    --gold: #ffc857;
+    --mint: #6fe7c0;
+    --cream: #f6efe4;
+    --muted: #c9b8da;
+    --shadow: 0 20px 50px rgba(10,4,20,0.45);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:
+      radial-gradient(60% 50% at 15% 10%, rgba(111,231,192,0.16), transparent 60%),
+      radial-gradient(50% 45% at 90% 85%, rgba(255,200,87,0.14), transparent 60%),
+      var(--bg);
+    color:var(--cream);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow-x:hidden;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    background:var(--panel);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    padding:32px 26px;
+    position:relative;
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .screen{display:none;}
+  .screen.active{display:block; animation:rise .5s ease both;}
+  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+
+  /* HERO */
+  .eyebrow{
+    font-size:13px; color:var(--mint); letter-spacing:.08em; font-weight:700; margin-bottom:10px;
+  }
+  h1.display{
+    font-family:'Lalezar', sans-serif;
+    font-size:44px;
+    line-height:1.15;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .lead{color:var(--muted); font-size:16px; line-height:1.8; margin-bottom:28px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    width:100%;
+    background:var(--gold);
+    color:#241534;
+    font-family:'Tajawal', sans-serif;
+    font-weight:900;
+    font-size:17px;
+    border:none;
+    border-radius:16px;
+    padding:16px 20px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(255,200,87,0.25);}
+  .btn:focus-visible{outline:3px solid var(--mint); outline-offset:3px;}
+  .btn.secondary{
+    background:transparent; color:var(--cream); border:1.5px solid rgba(255,255,255,0.25);
+  }
+  .hint{margin-top:14px; font-size:13px; color:var(--muted); text-align:center;}
+  .consent{margin-top:10px; font-size:11.5px; color:var(--muted); text-align:center; line-height:1.6;}
+  .consent a{color:#6fb3ff; text-decoration:underline;}
+
+  /* QUIZ */
+  .progress-track{
+    height:8px; width:100%; background:rgba(255,255,255,0.08); border-radius:999px; overflow:hidden; margin-bottom:22px;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg, var(--mint), var(--gold));
+    border-radius:999px; transition:width .4s ease;
+  }
+  .q-count{font-size:13px; color:var(--muted); margin-bottom:8px; font-weight:700;}
+  .q-text{font-family:'Lalezar', sans-serif; font-size:26px; color:var(--cream); line-height:1.4; margin-bottom:22px;}
+  .options{display:flex; flex-direction:column; gap:12px;}
+  .opt{
+    text-align:right;
+    background:rgba(255,255,255,0.04);
+    border:1.5px solid rgba(255,255,255,0.1);
+    color:var(--cream);
+    font-family:'Tajawal', sans-serif;
+    font-size:15.5px;
+    font-weight:500;
+    padding:15px 18px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .opt:hover{border-color:var(--mint); background:rgba(111,231,192,0.08); transform:translateX(-3px);}
+  .opt:focus-visible{outline:3px solid var(--mint); outline-offset:2px;}
+
+  /* AD SLOTS */
+  .ad-slot{
+    margin:22px 0;
+    border:1.5px dashed rgba(255,255,255,0.18);
+    border-radius:14px;
+    min-height:90px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.03);
+  }
+  .ad-slot__label{font-size:12px; color:var(--muted); letter-spacing:.05em;}
+
+  /* RESULT */
+  .age-wrap{text-align:center; margin-bottom:6px;}
+  .age-number{
+    font-family:'Lalezar', sans-serif;
+    font-size:96px;
+    color:var(--gold);
+    line-height:1;
+    display:block;
+  }
+  .age-label{font-size:14px; color:var(--muted); margin-bottom:22px; display:block;}
+  .persona-title{
+    font-family:'Lalezar', sans-serif;
+    font-size:28px;
+    color:var(--mint);
+    text-align:center;
+    margin-bottom:10px;
+  }
+  .persona-desc{color:var(--cream); font-size:15.5px; line-height:1.9; text-align:center; margin-bottom:24px; opacity:.9;}
+  .actions{display:flex; gap:10px;}
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--mint); color:#1a2e28; font-weight:700; font-size:14px;
+    padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none;
+    transition:all .25s ease;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .screen.active{animation:none;}
+    .btn:hover, .opt:hover{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Screen 1: Hero -->
+  <section class="screen active" id="screen-hero">
+    <div class="eyebrow">اختبار ٦٠ ثانية</div>
+    <h1 class="display">كم عمرك العقلي فعلاً؟</h1>
+    <p class="lead">شهادة ميلادك تقول رقم، بس تصرفاتك تقول رقم ثاني تماماً. ٨ أسئلة سريعة وبنكشف لك الحقيقة.</p>
+    <button class="btn" onclick="startQuiz()">ابدأ الاختبار</button>
+    <div class="hint">يستغرق أقل من دقيقة</div>
+    <div class="consent">بالضغط على "ابدأ الاختبار" فأنت توافق على <a href="./privacy-policy.html">سياسة الخصوصية</a></div>
+  </section>
+
+  <!-- Screen 2: Quiz -->
+  <section class="screen" id="screen-quiz">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="q-count" id="qCount">سؤال ١ من ٨</div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="qOptions"></div>
+  </section>
+
+  <!-- Ad slot before result -->
+  <section class="screen" id="screen-adpre">
+    <!-- AdSense: ضع هنا كود وحدة الإعلان الأولى بعد قبول حسابك -->
+    <div class="ad-slot"><span class="ad-slot__label">مساحة إعلان</span></div>
+    <button class="btn" onclick="showResult()">شوف النتيجة</button>
+  </section>
+
+  <!-- Screen 3: Result -->
+  <section class="screen" id="screen-result">
+    <div class="age-wrap">
+      <span class="age-number" id="ageNumber">0</span>
+      <span class="age-label">سنة عقلياً</span>
+    </div>
+    <div class="persona-title" id="personaTitle"></div>
+    <p class="persona-desc" id="personaDesc"></p>
+
+    <!-- AdSense: ضع هنا كود وحدة الإعلان الثانية بعد قبول حسابك -->
+    <div class="ad-slot"><span class="ad-slot__label">مساحة إعلان</span></div>
+
+    <div class="actions">
+      <button class="btn" onclick="shareResult()">شارك النتيجة</button>
+      <button class="btn secondary" onclick="restart()">أعد الاختبار</button>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast">تم نسخ الرابط ✓</div>
+
+
+<script>
+const questions = [
+  { q:"وش أول شي تسويه أول ما تصحى؟", opts:[
+    {t:"أفتح التيك توك على طول", v:14},
+    {t:"أتأكد من جدول اليوم والمهام", v:32},
+    {t:"أسولف مع أهل البيت وأشرب قهوة براحتي", v:52},
+    {t:"أفكر بصحتي وأشرب مويه أول شي", v:68},
+  ]},
+  { q:"صديق تأخر عليك ساعة بدون سبب، وش ردة فعلك؟", opts:[
+    {t:"أزعل وأطلع من الموقف", v:16},
+    {t:"أستخبر ليش وأمزح معه بعدين", v:30},
+    {t:"أتفهم، أكيد فيه سبب", v:48},
+    {t:"صرت أخطط دايم بمرونة أكثر عشان كذا", v:66},
+  ]},
+  { q:"جمعتك المثالية وش تسوي فيها؟", opts:[
+    {t:"طلعة عشوائية مع الشباب لين الفجر", v:15},
+    {t:"مشروع شخصي أو تعلم شي جديد", v:33},
+    {t:"وقت هادئ بالبيت مع القهوة وكتاب", v:55},
+    {t:"زيارة العائلة وجلسة عائلية", v:60},
+  ]},
+  { q:"أكثر شي يضايقك بصراحة؟", opts:[
+    {t:"لما أحد يقاطعني وأنا أسولف", v:18},
+    {t:"عدم التنظيم والفوضى", v:35},
+    {t:"قلة الاحترام بالكلام", v:50},
+    {t:"الاستعجال الزايد بكل شي", v:63},
+  ]},
+  { q:"كيف تتخذ قرار مصيري؟", opts:[
+    {t:"أروح مع اللي يريحني بذيك اللحظة", v:14},
+    {t:"أسوي قائمة إيجابيات وسلبيات", v:34},
+    {t:"أستشير ناس أثق فيهم", v:47},
+    {t:"أاخذ وقتي، وما أتسرع أبداً", v:70},
+  ]},
+  { q:"وش نوع المحتوى اللي تتابعه أكثر؟", opts:[
+    {t:"ترندات وتحديات تيك توك", v:13},
+    {t:"بودكاست تطوير ذات أو أعمال", v:30},
+    {t:"أخبار ووثائقيات", v:52},
+    {t:"برامج طبخ أو زراعة وأشياء هادئة", v:65},
+  ]},
+  { q:"لو حصلت على يوم إجازة مفاجئ، وش تسوي؟", opts:[
+    {t:"طلعة مع الشباب بدون تخطيط", v:16},
+    {t:"أنجز شغل متراكم كان يضايقني", v:36},
+    {t:"أرتاح وأنام أكثر من العادة", v:48},
+    {t:"أمشي بالحديقة وأستمتع بالهدوء", v:62},
+  ]},
+  { q:"وش رأيك بالتكنولوجيا الجديدة كل فترة؟", opts:[
+    {t:"أول من يجربها فور طرحها", v:14},
+    {t:"أنتظر شوي أشوف تقييمات الناس", v:31},
+    {t:"أستخدمها إذا فعلاً محتاجها", v:49},
+    {t:"أفضل الطريقة اللي اعتدت عليها", v:64},
+  ]},
+];
+
+let current = 0;
+let total = 0;
+let toastTimer = null;
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz(){
+  current = 0; total = 0;
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = questions[current];
+  document.getElementById('qCount').textContent = `سؤال ${toArabicDigits(current+1)} من ٨`;
+  document.getElementById('progressFill').style.width = `${(current/questions.length)*100}%`;
+  document.getElementById('qText').textContent = item.q;
+  const optsWrap = document.getElementById('qOptions');
+  optsWrap.innerHTML = '';
+  item.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt.t;
+    btn.onclick = () => selectOption(opt.v);
+    optsWrap.appendChild(btn);
+  });
+}
+
+function selectOption(value){
+  total += value;
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    document.getElementById('progressFill').style.width = `100%`;
+    showScreen('screen-adpre');
+  }
+}
+
+function toArabicDigits(n){
+  const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).split('').map(d => map[d] ?? d).join('');
+}
+
+function getPersona(avg){
+  if(avg < 22) return {title:"طفل بروح شقية 🎈", desc:"تعيش اللحظة بدون تعقيد، وتضحك بصوت عالي بدون خجل. العالم عندك لعبة كبيرة."};
+  if(avg < 38) return {title:"طاقة شبابية متقدة ⚡", desc:"عندك حماس اللي يبدأ أي شي جديد، وتحب التجربة قبل التخطيط الطويل."};
+  if(avg < 50) return {title:"متزن وواعي 🌟", desc:"توازن نادر بين الحماس والحكمة، تعرف متى تندفع ومتى تتوقف تفكر."};
+  if(avg < 60) return {title:"حكيم بخبرة 🧠", desc:"قراراتك مدروسة، وناسك يثقون برأيك أكثر من عمرك الحقيقي."};
+  return {title:"روح عجوز حكيمة 🕰️", desc:"وصلت لمرحلة الهدوء الحقيقي، تقدّر الأشياء البسيطة أكثر من أي شي ثاني."};
+}
+
+function showResult(){
+  const avg = Math.round(total / questions.length);
+  const persona = getPersona(avg);
+  document.getElementById('personaTitle').textContent = persona.title;
+  document.getElementById('personaDesc').textContent = persona.desc;
+  showScreen('screen-result');
+  animateNumber(avg);
+}
+
+function animateNumber(target){
+  const el = document.getElementById('ageNumber');
+  const duration = 900;
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min((now-start)/duration, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = toArabicDigits(Math.round(eased*target));
+    if(p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function restart(){
+  showScreen('screen-hero');
+}
+
+function shareResult(){
+  const text = `عمري العقلي طلع ${document.getElementById('ageNumber').textContent} سنة! جرب الاختبار وشوف عمرك انت 👇`;
+  const url = window.location.href;
+  if(navigator.share){
+    navigator.share({ text, url }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(`${text} ${url}`).then(showToast);
+  }
+}
+
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
